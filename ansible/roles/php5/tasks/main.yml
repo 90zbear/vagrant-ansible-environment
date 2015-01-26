@@ -19,10 +19,13 @@
   - imagemagick
   - php5-imagick
   - php5-mcrypt
+  when: not apache2_installed.stat.exists
 
 - template: src=php.ini dest=/etc/php5/apache2/php.ini owner=vagrant mode=0600
+  when: not php5_installed.stat.exists
 
 - command: sudo /etc/init.d/apache2 restart
+  when: not php5_installed.stat.exists
 
 # - name: apache service restart
 #   service: name=apache2 state=restarted

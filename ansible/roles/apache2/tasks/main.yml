@@ -10,10 +10,12 @@
 
 - name: apache2 template setting
   template: src=000-default.conf dest=/etc/apache2/sites-available/000-default.conf owner=vagrant mode=0600
-  when: not apache2_installed.stat.exists
 
 - name: apache2 template setting ssl
   template: src=default-ssl.conf dest=/etc/apache2/sites-available/default-ssl.conf owner=vagrant mode=0600
+
+- name: remove default index.html
+  command: rm /var/www/html/index.html
   when: not apache2_installed.stat.exists
 
 - command: sudo /etc/init.d/apache2 restart

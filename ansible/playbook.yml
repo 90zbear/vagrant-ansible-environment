@@ -10,3 +10,5 @@
   - apache2
   - php5
   - mysql
+  - nodejs
+  - zsh

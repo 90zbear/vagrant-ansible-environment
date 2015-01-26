@@ -1,0 +1,11 @@
+---
+
+- name: node.js install
+  apt: pkg={{item}} state=present
+  with_items:
+  - nodejs
+  - npm
+- command: sudo update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+
+- name: install gulp
+  command: sudo npm install -g gulp

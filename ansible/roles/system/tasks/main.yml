@@ -4,7 +4,10 @@
   apt: update_cache=yes
 
 - name: git install
-  apt: pkg=git state=present
+  apt: pkg={{item}} state=present
+  with_items:
+  - git
+  - git-core
 
 - name: unzip install
   apt: pkg=unzip state=present
