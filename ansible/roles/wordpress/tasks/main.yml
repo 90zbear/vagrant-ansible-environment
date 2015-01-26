@@ -1,0 +1,18 @@
+---
+
+- name: check wpcli exists or not
+  stat: path=/usr/bin/wp
+  register: wpcli_installed
+
+- name: install wp-cli
+  command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+  when: not wpcli_installed.stat.exists
+
+- command: chmod +x wp-cli.phar
+  when: not wpcli_installed.stat.exists
+
+- command: mv wp-cli.phar /usr/bin/wp
+  when: not wpcli_installed.stat.exists
+
+# - name: apache service restart
+#   service: name=apache2 state=restarted
