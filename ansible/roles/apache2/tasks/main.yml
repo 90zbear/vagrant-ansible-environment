@@ -1,0 +1,22 @@
+---
+
+- name: check whether apache2 exists or not
+  stat: path=/etc/apache2
+  register: apache2_installed
+
+- name: apache2 install
+  apt: pkg=apache2 state=present
+  when: not apache2_installed.stat.exists
+
+- name: apache2 template setting
+  template: src=000-default.conf dest=/etc/apache2/sites-available/000-default.conf owner=vagrant mode=0600
+  when: not apache2_installed.stat.exists
+
+- name: apache2 template setting ssl
+  template: src=default-ssl.conf dest=/etc/apache2/sites-available/default-ssl.conf owner=vagrant mode=0600
+  when: not apache2_installed.stat.exists
+
+- command: sudo /etc/init.d/apache2 restart
+
+# - name: apache service restart
+#   service: name=apache2 state=restarted

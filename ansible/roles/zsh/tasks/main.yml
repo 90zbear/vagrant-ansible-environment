@@ -1,0 +1,29 @@
+---
+
+- name: check whether zsh exists or not
+  # shell: "[ -f /usr/bin/zsh ] && echo 'Found' || echo ''"
+  stat: path=~/.oh-my-zsh
+  register: zsh_installed
+
+- name: zsh install
+  apt: pkg=zsh state=present
+  when: zsh_installed.stat.exists
+
+- name: change default shell
+  user: name=vagrant shell=/usr/bin/zsh
+  when: not zsh_installed.stat.exists
+
+- name: oh-my-zsh dir
+  command: cd /home/vagrant
+  when: not zsh_installed.stat.exists
+
+- name: oh-my-zsh download
+  command: git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+  when: not zsh_installed.stat.exists
+
+- name: copy oh-my-zsh setting
+  command: cp /home/vagrant/.oh-my-zsh/templates/zshrc.zsh-template /home/vagrant/.zshrc
+  when: not zsh_installed.stat.exists
+
+- name: oh-my-zsh template setting
+  template: src=zshrc.cfg dest=/home/vagrant/.zshrc owner=vagrant mode=0600 validate_certs=no

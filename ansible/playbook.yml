@@ -1,0 +1,12 @@
+---
+- hosts: all
+  user: vagrant
+  sudo: yes
+  vars:
+    root_db_password: vagrant
+  roles:
+  - system
+  # - nginx
+  - apache2
+  - php5
+  - mysql

@@ -1,0 +1,16 @@
+---
+
+- name: nginx install
+  apt: pkg={{item}} state=present
+  with_items:
+  - nginx-extras
+  - nginx-doc
+
+- template: src=localhost.conf dest=/etc/nginx/sites-available/default owner=vagrant mode=0600
+# - command: sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled
+
+- name: nginx start
+  command: sudo /etc/init.d/nginx start
+
+- name: add group vagrant
+  command: sudo addgroup vagrant www-data

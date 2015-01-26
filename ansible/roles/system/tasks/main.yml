@@ -1,0 +1,17 @@
+---
+
+- name: apt update
+  apt: update_cache=yes
+
+- name: git install
+  apt: pkg=git state=present
+
+- name: unzip install
+  apt: pkg=unzip state=present
+
+- name: python install
+  apt: pkg={{item}} state=present
+  with_items:
+  - python-pip
+  - python-dev
+  - python-mysqldb
