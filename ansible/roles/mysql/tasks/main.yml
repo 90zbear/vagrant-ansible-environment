@@ -1,7 +1,7 @@
 ---
 
 - name: check whether mysql exists or not
-  stat: path=/etc/mysql
+  stat: path=/etc/mysql/debian-start
   register: mysql_installed
 
 - name: mysql install
